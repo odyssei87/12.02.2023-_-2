@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Asp.net</title>
+</head>
+<body>
+    <h2>User form</h2>
+    <div id="message"></div>
+    <div>
+        <p>
+            Name:<br />
+            <input name="userName" id="userName" />
+        </p>
+        <p>
+            Age:<br />
+            <input name="userAge" id="userAge" type="number" />
+        </p>
+        <p>
+            <select multiple name="Languaes1" id="Languaes">
+                <option value="PHP">PHP</option>
+                <option value="Java">Java</option>
+                <option value="HTML">HTML</option>
+                <option value="CSS">CSS</option>
+                <option value="Bootstrap">Bootstrap</option>
+                <option value="SQL">SQL</option>
+              
+            </select>
+           
+
+            <button id="sendBtn">Send</button>
+    </div>
+    <script>
+        
+        document.getElementById("sendBtn").addEventListener("click", send);
+        async function send() {
+            const response = await fetch("/api/user", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: document.getElementById("userName").value,
+                    age: document.getElementById("userAge").value,
+                    languaes: document.getElementById("Languaes").value
+                })
+            });
+            const message = await response.json();
+            document.getElementById("message").innerText = message.text;
+            
+        }
+    </script>
+    
+</body>
+</html>
